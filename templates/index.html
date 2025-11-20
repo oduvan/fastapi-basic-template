@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - {{ app_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="card highlighted">
+            <div class="card-header">
+                Welcome to {{ app_name }}
+            </div>
+            <div class="card-body">
+                <p>Version: {{ version }}</p>
+                <p>Environment: {{ environment }}</p>
+                <p>This is a demonstration of Jinja2 templates with PostCSS-compiled styles.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                Available Endpoints
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li><a href="/docs">API Documentation (Swagger)</a></li>
+                    <li><a href="/redoc">API Documentation (ReDoc)</a></li>
+                    <li><a href="/admin">Admin Panel</a></li>
+                    <li><a href="{{ url_for('websocket_test_page') }}">WebSocket Test</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                Features
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>✓ CRUD operations with pagination, filtering, and sorting</li>
+                    <li>✓ File upload/download</li>
+                    <li>✓ WebSocket support</li>
+                    <li>✓ Background tasks</li>
+                    <li>✓ Redis caching</li>
+                    <li>✓ Rate limiting</li>
+                    <li>✓ SQLAdmin panel</li>
+                    <li>✓ Jinja2 templates</li>
+                </ul>
+            </div>
+        </div>
+
+        {% if items %}
+        <div class="card">
+            <div class="card-header">
+                Recent Items
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.title }}</td>
+                            <td>{{ "Active" if item.is_active else "Inactive" }}</td>
+                            <td>{{ item.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="alert alert-info">
+            <strong>Note:</strong> This is a development environment. Please configure proper security settings for production use.
+        </div>
+    </div>
+</body>
+</html>
