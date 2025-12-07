@@ -12,8 +12,11 @@ from alembic import context
 # Import the Base and all models
 from app.core.config import settings
 
-# Import Base (which loads all models from app.models)
-from app.models import Base
+# Import Base and ensure all models are loaded for autogenerate
+from app.models import Base, get_all_models
+
+# Load all models so they register with Base.metadata
+get_all_models()
 
 # this is the Alembic Config object
 config = context.config

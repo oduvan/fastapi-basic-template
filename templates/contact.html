@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - {{ app_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="card highlighted">
+            <div class="card-header">
+                Contact Form Example
+            </div>
+            <div class="card-body">
+                <p><a href="/">&larr; Back to Home</a></p>
+
+                {% if success %}
+                <div class="alert alert-success">
+                    <strong>Success!</strong> Your message has been received.
+                </div>
+                <div class="card">
+                    <div class="card-header">Submitted Data</div>
+                    <div class="card-body">
+                        <p><strong>Name:</strong> {{ submitted_data.name }}</p>
+                        <p><strong>Email:</strong> {{ submitted_data.email }}</p>
+                        <p><strong>Message:</strong> {{ submitted_data.message }}</p>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if errors %}
+                <div class="alert alert-danger">
+                    <strong>Validation Error!</strong> Please correct the errors below.
+                </div>
+                {% endif %}
+
+                <form method="post" action="/contact">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" value="{{ form_data.name if form_data else '' }}" required>
+                        {% if errors and errors.name %}
+                        <small style="color: red;">{{ errors.name }}</small>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="{{ form_data.email if form_data else '' }}" required>
+                        {% if errors and errors.email %}
+                        <small style="color: red;">{{ errors.email }}</small>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="4" required>{{ form_data.message if form_data else '' }}</textarea>
+                        {% if errors and errors.message %}
+                        <small style="color: red;">{{ errors.message }}</small>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="alert alert-info">
+            <strong>Note:</strong> This is a demonstration of HTML form handling with FastAPI's Form() dependency.
+        </div>
+    </div>
+</body>
+</html>

@@ -13,6 +13,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     libc-dev \
+    libpq-dev \
     postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
